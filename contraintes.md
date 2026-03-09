@@ -4,7 +4,7 @@
 
 - Entre 0 et 2 parents biologiques
 - Peut avoir entre 0 et 2 parents adoptifs
-- Un nombre x de parents (incluant les parents adoptifs, beaux-parents, etc.)
+- Un nombre illimité de parents (incluant les parents adoptifs, beaux-parents, etc.)
 - Un nombre illimité d'enfants (biologiques ou adoptés)
 - Un ou plusieurs prénoms
 - Un ou plusieurs noms de famille
@@ -19,7 +19,7 @@
 - Peut mourir avant un parent
 
 ## Les parents :
-- Peuvent apparement être frère et sœur si l'un des deux a été adopté ?...
+- Peuvent apparemment être frère et sœur si l'un des deux a été adopté ?...
 - Ne peuvent pas être leurs propres parents
 - Peuvent mourir avant ou après son enfant
 - Ne peuvent pas être l'ancêtre de lui-même
