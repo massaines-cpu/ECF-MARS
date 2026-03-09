@@ -18,11 +18,11 @@ def connexion_mysql():
     )
 
 @app.post('/individu')
-def creer_individu(individu: individu):
+def creer_individu(ind: individu):
     connexion = connexion_mysql()
     cursor = connexion.cursor()
-    cursor.execute('INSERT INTO individu (id, date_naissance, date_deces VALUES (%s, %s, %s)',
-                   (individu.id, individu.date_naissance, individu.date_deces))
+    cursor.execute('INSERT INTO individu (id, date_naissance, date_deces) VALUES (%s, %s, %s)',
+                   (ind.id, ind.date_naissance, ind.date_deces))
     connexion.commit()
 
 @app.get('/individu/{id}')
@@ -31,14 +31,15 @@ def recup_individu(id: int):
     cursor = connexion.cursor()
     cursor.execute('SELECT * FROM individu WHERE id = %s', (id,))
     recuperation_ligne = cursor.fetchone()
-    connexion.commit()
+    return recuperation_ligne
 
-@app.put('individu/{id}')
+
+@app.put('/individu/{id}')
 def modif_individu(id: int, ind: individu):
     connexion = connexion_mysql()
     cursor = connexion.cursor()
     cursor.execute('UPDATE individu SET date_naissance = %s, date_deces = %s WHERE id = %s ',
-                   (individu.date_naissance, individu.date_deces, id,))
+                   (ind.date_naissance, ind.date_deces, id,))
     connexion.commit()
 
 @app.delete('/individu/{id}')
@@ -47,6 +48,69 @@ def supp_individu(id: int):
     cursor = connexion.cursor()
     cursor.execute('DELETE FROM individu WHERE id = %s', (id,))
     connexion.commit()
+
+@app.post('/individu/{id}/prenom')
+def ajout_prenom(id: int, ind: individu_prenom):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('INSERT INTO individu_prenom (id, id_individu, prenom) VALUES (%s, %s, %s)',
+                   (ind.id, id, ind.prenom))
+    connexion.commit()
+
+@app.put('/individu/{id}/prenom/{id_prenom}')
+def modif_prenom(id: int, id_prenom: int, ind: individu_prenom):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('UPDATE individu_prenom SET prenom = %s WHERE id = %s',
+                   (ind.prenom, id_prenom))
+    connexion.commit()
+
+@app.delete('/individu/{id}/prenom/{id_prenom}')
+def supp_prenom(id:int, id_prenom: int):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('DELETE FROM individu_prenom WHERE id = %s', (id_prenom,))
+    connexion.commit()
+
+@app.post('/individu/{id}/nom')
+def ajout_nom(id: int, ind: individu_nom):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('INSERT INTO individu_nom (id, id_individu, nom) VALUES (%s, %s, %s)',
+                   (ind.id, id, ind.nom))
+    connexion.commit()
+
+@app.put('/individu/{id}/nom/{id_nom}')
+def modif_nom(id: int, id_nom: int, ind: individu_nom):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('UPDATE individu_nom SET nom = %s WHERE id = %s',
+                   (ind.nom, id_nom))
+    connexion.commit()
+
+@app.delete('/individu/{id}/nom/{id_nom}')
+def supp_nom(id:int, id_nom: int):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('DELETE FROM individu_nom WHERE id = %s', (id_nom,))
+    connexion.commit()
+
+@app.post('/relation/biologique')
+def relation_biologique(rel: relation_biologique):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('INSERT INTO relation_biologique (id, id_parents, id_enfant) VALUES (%s, %s, %s)',)
+@app.delete('/relation/biologique/{id}')
+
+@app.post('/relation/adoptive')
+@app.delete('/relation/adoptive/{id}')
+
+@app.post('/relation/beaux_parents')
+@app.delete('/relation/beaux_parents/{id}')
+
+@app.post('/union/')
+@app.put('/union/{id}')
+@app.delete('/union/{id}')
 
 
 
