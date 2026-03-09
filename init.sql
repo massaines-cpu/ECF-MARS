@@ -5,14 +5,14 @@ USE etrange_genealogie;
 
 CREATE TABLE IF NOT EXISTS individu (
     id INT PRIMARY KEY,
-    DateNaissance DATE NOT NULL,
-    DateDeces DATE NULL
+    date_naissance DATE NOT NULL,
+    date_deces DATE NULL
     );
 
 -- contraintes individu
 
 ALTER TABLE individu
-ADD CONSTRAINT verif_date CHECK (DateNaissance < DateDeces OR DateDeces IS NULL);
+ADD CONSTRAINT verif_date CHECK (date_naissance < date_deces OR date_deces IS NULL);
 
 -- table individu_nom
 
