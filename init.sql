@@ -1,5 +1,6 @@
 -- base de données
 CREATE DATABASE etrange_genealogie;
+USE etrange_genealogie;
 -- table individu
 
 CREATE TABLE IF NOT EXISTS individu (
