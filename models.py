@@ -27,7 +27,7 @@ class relation_adoptive(BaseModel):
     id_parents: int
     id_enfant: int
 
-class relation_beau_parents(BaseModel):
+class relation_beaux_parents(BaseModel):
     id: int
     id_parents: int
     id_enfant: int
