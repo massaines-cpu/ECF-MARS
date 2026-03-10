@@ -96,21 +96,71 @@ def supp_nom(id:int, id_nom: int):
     connexion.commit()
 
 @app.post('/relation/biologique')
-def relation_biologique(rel: relation_biologique):
+def creer_relation_biologique(rel: relation_biologique):
     connexion = connexion_mysql()
     cursor = connexion.cursor()
-    cursor.execute('INSERT INTO relation_biologique (id, id_parents, id_enfant) VALUES (%s, %s, %s)',)
+    cursor.execute('INSERT INTO relation_biologique (id, id_parents, id_enfant) VALUES (%s, %s, %s)',
+                   (rel.id, rel.id_parents, rel.id_enfant))
+    connexion.commit()
+
 @app.delete('/relation/biologique/{id}')
+def supp_relation_bio(id: int):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('DELETE FROM relation_biologique WHERE id = %s', (id,))
+    connexion.commit()
 
 @app.post('/relation/adoptive')
+def creer_relation_adoptive(rel: relation_adoptive):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('INSERT INTO relation_adoptive (id, id_parents, id_enfant) VALUES (%s, %s, %s)',
+                   (rel.id, rel.id_parents, rel.id_enfant))
+    connexion.commit()
+
 @app.delete('/relation/adoptive/{id}')
+def supp_relation_adoptive(id: int):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('DELETE FROM relation_adoptive WHERE id = %s', (id,))
+    connexion.commit()
 
 @app.post('/relation/beaux_parents')
+def creer_relation_beaux_parents(rel: relation_beaux_parents):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('INSERT INTO relation_beaux_parents (id, id_parents, id_enfant) VALUES (%s, %s, %s)',
+                   (rel.id, rel.id_parents, rel.id_enfant))
+    connexion.commit()
+
 @app.delete('/relation/beaux_parents/{id}')
+def supp_relation_beaux_parents(id: int):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('DELETE FROM relation_beaux_parents WHERE id = %s', (id,))
+    connexion.commit()
 
 @app.post('/union/')
-@app.put('/union/{id}')
-@app.delete('/union/{id}')
+def creer_union_conjugale(union: union_conjugale):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('INSERT INTO union_conjugale (id, id_individu_a, id_individu_b, date_debut, date_fin) VALUES (%s, %s, %s, %s, %s)',
+                   (union.id, union.id_individu_a, union.id_individu_b, union.date_debut, union.date_fin,))
+    connexion.commit()
 
+@app.put('/union/{id}')
+def modif_union(id: int, union: union_conjugale):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('UPDATE union_conjugale SET id_individu_a = %s, id_individu_b = %s, date_debut = %s, date_fin = %s WHERE id = %s',
+                              (union.id_individu_a, union.id_individu_b, union.date_debut, union.date_fin, id))
+    connexion.commit()
+
+@app.delete('/union/{id}')
+def supp_union(id: int):
+    connexion = connexion_mysql()
+    cursor = connexion.cursor()
+    cursor.execute('DELETE FROM union_conjugale WHERE id = %s', (id,))
+    connexion.commit()
 
 
