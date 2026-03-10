@@ -5,7 +5,7 @@ USE etrange_genealogie;
 
 CREATE TABLE IF NOT EXISTS individu (
     id INT PRIMARY KEY,
-    date_naissance DATE NOT NULL,
+    date_naissance DATE NULL,
     date_deces DATE NULL
     );
 

@@ -4,18 +4,20 @@ from typing import Optional
 
 class individu(BaseModel):
     id: int
-    date_naissance: date
+    date_naissance: Optional[date] = None
     date_deces: Optional[date] = None
 
 class individu_nom(BaseModel):
     id: int
     id_individu: int
     nom: str
+    ordre: int
 
 class individu_prenom(BaseModel):
     id: int
     id_individu: int
     prenom: str
+    ordre: int
 
 class relation_biologique(BaseModel):
     id: int

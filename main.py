@@ -39,7 +39,7 @@ def recup_individu(id: int):
         return recuperation_ligne
 
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.put('/individu/{id}')
@@ -51,7 +51,7 @@ def modif_individu(id: int, ind: individu):
                        (ind.date_naissance, ind.date_deces, id,))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete('/individu/{id}')
 def supp_individu(id: int):
@@ -61,29 +61,29 @@ def supp_individu(id: int):
         cursor.execute('DELETE FROM individu WHERE id = %s', (id,))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.post('/individu/{id}/prenom')
 def ajout_prenom(id: int, ind: individu_prenom):
     try:
         connexion = connexion_mysql()
         cursor = connexion.cursor()
-        cursor.execute('INSERT INTO individu_prenom (id, id_individu, prenom) VALUES (%s, %s, %s)',
-                       (ind.id, id, ind.prenom))
+        cursor.execute('INSERT INTO individu_prenom (id, id_individu, prenom, ordre) VALUES (%s, %s, %s, %s)',
+                       (ind.id, id, ind.prenom, ind.ordre))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.put('/individu/{id}/prenom/{id_prenom}')
 def modif_prenom(id: int, id_prenom: int, ind: individu_prenom):
     try:
         connexion = connexion_mysql()
         cursor = connexion.cursor()
-        cursor.execute('UPDATE individu_prenom SET prenom = %s WHERE id = %s',
-                       (ind.prenom, id_prenom))
+        cursor.execute('UPDATE individu_prenom SET prenom = %s, ordre = %s WHERE id = %s',
+                       (ind.prenom, ind.ordre, id_prenom))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete('/individu/{id}/prenom/{id_prenom}')
 def supp_prenom(id:int, id_prenom: int):
@@ -93,29 +93,29 @@ def supp_prenom(id:int, id_prenom: int):
         cursor.execute('DELETE FROM individu_prenom WHERE id = %s', (id_prenom,))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.post('/individu/{id}/nom')
 def ajout_nom(id: int, ind: individu_nom):
     try:
         connexion = connexion_mysql()
         cursor = connexion.cursor()
-        cursor.execute('INSERT INTO individu_nom (id, id_individu, nom) VALUES (%s, %s, %s)',
-                       (ind.id, id, ind.nom))
+        cursor.execute('INSERT INTO individu_nom (id, id_individu, nom, ordre) VALUES (%s, %s, %s, %s)',
+                       (ind.id, id, ind.nom, ind.ordre))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.put('/individu/{id}/nom/{id_nom}')
 def modif_nom(id: int, id_nom: int, ind: individu_nom):
     try:
         connexion = connexion_mysql()
         cursor = connexion.cursor()
-        cursor.execute('UPDATE individu_nom SET nom = %s WHERE id = %s',
-                       (ind.nom, id_nom))
+        cursor.execute('UPDATE individu_nom SET nom = %s, ordre = %s WHERE id = %s',
+                       (ind.nom, ind.ordre, id_nom))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete('/individu/{id}/nom/{id_nom}')
 def supp_nom(id:int, id_nom: int):
@@ -136,7 +136,7 @@ def creer_relation_biologique(rel: relation_biologique):
                        (rel.id, rel.id_parents, rel.id_enfant))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete('/relation/biologique/{id}')
 def supp_relation_bio(id: int):
@@ -146,7 +146,7 @@ def supp_relation_bio(id: int):
         cursor.execute('DELETE FROM relation_biologique WHERE id = %s', (id,))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.post('/relation/adoptive')
 def creer_relation_adoptive(rel: relation_adoptive):
@@ -157,7 +157,7 @@ def creer_relation_adoptive(rel: relation_adoptive):
                        (rel.id, rel.id_parents, rel.id_enfant))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete('/relation/adoptive/{id}')
 def supp_relation_adoptive(id: int):
@@ -167,7 +167,7 @@ def supp_relation_adoptive(id: int):
         cursor.execute('DELETE FROM relation_adoptive WHERE id = %s', (id,))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.post('/relation/beaux_parents')
 def creer_relation_beaux_parents(rel: relation_beaux_parents):
@@ -178,7 +178,7 @@ def creer_relation_beaux_parents(rel: relation_beaux_parents):
                        (rel.id, rel.id_parents, rel.id_enfant))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete('/relation/beaux_parents/{id}')
 def supp_relation_beaux_parents(id: int):
@@ -188,7 +188,7 @@ def supp_relation_beaux_parents(id: int):
         cursor.execute('DELETE FROM relation_beaux_parents WHERE id = %s', (id,))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.post('/union/')
 def creer_union_conjugale(union: union_conjugale):
@@ -199,7 +199,7 @@ def creer_union_conjugale(union: union_conjugale):
                        (union.id, union.id_individu_a, union.id_individu_b, union.date_debut, union.date_fin,))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.put('/union/{id}')
 def modif_union(id: int, union: union_conjugale):
@@ -210,7 +210,7 @@ def modif_union(id: int, union: union_conjugale):
                         (union.id_individu_a, union.id_individu_b, union.date_debut, union.date_fin, id))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete('/union/{id}')
 def supp_union(id: int):
@@ -220,6 +220,6 @@ def supp_union(id: int):
         cursor.execute('DELETE FROM union_conjugale WHERE id = %s', (id,))
         connexion.commit()
     except mysql.Error as e:
-        raise HTTPException(status_code=400, detail='c\'est interdit de faire ça !')
+        raise HTTPException(status_code=400, detail=str(e))
 
 
